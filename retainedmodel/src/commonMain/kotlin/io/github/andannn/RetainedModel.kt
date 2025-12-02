@@ -9,7 +9,13 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlin.coroutines.EmptyCoroutineContext
 
+/**
+ * Base class for retained model.
+ */
 abstract class RetainedModel {
+    /**
+     * Scope for retained model which will be canceled when this model is retired.
+     */
     val retainedScope: CoroutineScope = createViewModelScope()
 
     internal fun clear() {
@@ -17,9 +23,15 @@ abstract class RetainedModel {
         onClear()
     }
 
+    /**
+     * Called when this model is retired.
+     */
     open fun onClear() {}
 }
 
+/**
+ * retain a [RetainedModel].
+ */
 @Composable
 fun <T : RetainedModel> retainRetainedModel(
     vararg keys: Any?,

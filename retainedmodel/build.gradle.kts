@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.andannn"
-version = "1.0.0"
+version = "1.0.1"
 
 kotlin {
     androidTarget {
@@ -31,6 +31,8 @@ kotlin {
             isStatic = true
         }
     }
+
+    jvm()
 
     sourceSets {
         commonMain.dependencies {
