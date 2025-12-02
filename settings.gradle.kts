@@ -22,4 +22,3 @@ dependencyResolutionManagement {
 rootProject.name = "RetainedModel"
 
 include(":retainedmodel")
-include(":sample:navigation-compose")
