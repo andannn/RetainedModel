@@ -32,7 +32,15 @@ kotlin {
         }
     }
 
-    jvm()
+    jvm {
+        compilations.all {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_11)
+                }
+            }
+        }
+    }
 
     sourceSets {
         commonMain.dependencies {
