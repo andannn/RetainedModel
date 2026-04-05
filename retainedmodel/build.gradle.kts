@@ -1,9 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.compose)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.maven.publish)
 }
@@ -12,25 +11,19 @@ group = "io.github.andannn"
 version = "1.0.2"
 
 kotlin {
-    androidTarget {
-        compilations.all {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_11)
-                }
-            }
+    android {
+        namespace = "io.github.andannn"
+        compileSdk = 36
+
+        withDeviceTestBuilder {}.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
     }
 
     listOf(
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "RetainedModel"
-            isStatic = true
-        }
-    }
+    )
 
     jvm {
         compilations.all {
@@ -47,32 +40,13 @@ kotlin {
             implementation(libs.compose.runtime.retain)
         }
 
-        androidInstrumentedTest.dependencies {
+        getByName("androidDeviceTest").dependencies {
             implementation(libs.compose.ui.test.junit4.android)
             implementation(libs.compose.ui.test.manifest)
             implementation(libs.jetbrains.compose.material3)
             implementation(libs.kotlin.test)
+            implementation(libs.espresso.core)
         }
-    }
-}
-
-android {
-    namespace = "io.github.andannn"
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 24
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
