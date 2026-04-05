@@ -48,8 +48,6 @@ kotlin {
 }
 
 mavenPublishing {
-    coordinates(group.toString(), name, version.toString())
-
     pom {
         name = "RetainedModel"
         description = "A small helper for build retained model similar to android ViewModel."
