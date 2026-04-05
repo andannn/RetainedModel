@@ -7,9 +7,6 @@ plugins {
     alias(libs.plugins.maven.publish)
 }
 
-group = "io.github.andannn"
-version = "1.0.2"
-
 kotlin {
     android {
         namespace = "io.github.andannn"
